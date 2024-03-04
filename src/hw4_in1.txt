@@ -1,0 +1,9 @@
+EnterBuyOrder 002244 alice 5000 1
+EnterBuyOrder 002245 james 2300 1
+DisplayHighestBuyOrder 013000
+EnterSellOrder 093230 marco 5300 1
+EnterSellOrder 093250 alexa 7300 1
+EnterSellOrder 094500 bob 5000 1
+DisplayLowestSellOrder 103250
+DisplayHighestBuyOrder 103350
+

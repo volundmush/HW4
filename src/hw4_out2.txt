@@ -1,0 +1,34 @@
+EnterBuyOrder 002244 alice 5000 25
+EnterBuyOrder 002245 james 2300 11
+DisplayHighestBuyOrder 013000 alice 002244 5000 25
+EnterSellOrder 093230 marco 5300 15
+EnterSellOrder 093250 alexa 7300 190
+EnterSellOrder 094500 bob 5000 74
+ExecuteBuySellOrders 5000 25
+Buyer: alice 0
+Seller: bob 49
+DisplayLowestSellOrder 103250 bob 094500 5000 49
+DisplayHighestBuyOrder 103350 james 002245 2300 11
+EnterSellOrder 103234 horace 3200 250
+EnterBuyOrder 122210 billy 4100 63
+ExecuteBuySellOrders 3650 63
+Buyer: billy 0
+Seller: horace 187
+EnterBuyOrder 123000 vince 2300 32
+DisplayHighestBuyOrder 130102 james 002245 2300 11
+EnterSellOrder 132015 lucas 2300 53
+ExecuteBuySellOrders 2300 11
+Buyer: james 0
+Seller: lucas 42
+ExecuteBuySellOrders 2300 32
+Buyer: vince 0
+Seller: lucas 10
+EnterBuyOrder 140743 markus 7300 22
+ExecuteBuySellOrders 4800 10
+Buyer: markus 12
+Seller: lucas 0
+ExecuteBuySellOrders 6150 12
+Buyer: markus 0
+Seller: bob 37
+DisplayLowestSellOrder 151009 bob 094500 5000 37
+EnterBuyOrder 164107 cartman 4905 21
