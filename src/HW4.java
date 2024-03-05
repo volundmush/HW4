@@ -41,6 +41,10 @@ public class HW4
                 return Integer.compare(this.seconds, other.seconds);
             }
         }
+
+        public String toString() {
+            return String.format("%02d%02d%02d", hours, minutes, seconds);
+        }
     }
 
     private static class Key implements Comparable<Key> {
@@ -112,16 +116,19 @@ public class HW4
     }
 
     private void DisplayHighestBuyOrder(String inTime) {
-
+       Entry<Key, Data> min = buyOrders.min();
+       System.out.println(String.format("DisplayHighestBuyOrder %s %s %s %s %s", inTime, min.getValue().owner, min.getKey().time, min.getKey().price, min.getValue().quantity));
     }
 
     private void DisplayLowestSellOrder(String inTime) {
-
+       Entry<Key, Data> min = sellOrders.min();
+       System.out.println(String.format("DisplayLowestSellOrder %s %s %s %s %s", inTime, min.getValue().owner, min.getKey().time, min.getKey().price, min.getValue().quantity));
     }
 
     private void handleDataLine () {
-        final String line = data.nextLine();
+        final String line = data.nextLine().trim();
         // Split by spaces...
+        if(line.isEmpty()) return;
         String[] parts = line.split(" " );
         String cmd = parts[0].trim();
 
