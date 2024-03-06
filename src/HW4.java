@@ -16,6 +16,7 @@ import java.util.Scanner;
 public class HW4
 {
 
+    // This class is used by the priority queue's Key data structure to store the time in a sortable manner.
     private static class Timestamp implements Comparable<Timestamp> {
         public int hours;
         public int minutes;
@@ -47,6 +48,7 @@ public class HW4
         }
     }
 
+    // Combination of price and Time that can be sorted by the priority queue.
     private static class Key implements Comparable<Key> {
         public Timestamp time;
         public int price;
@@ -62,11 +64,12 @@ public class HW4
                if (this.price != other.price) {
                   return Integer.compare(this.price, other.price);
                } else {
-                  return this.time.compareTo(other.time);
+                  return (this.time.compareTo(other.time) * -1);
                }
          }
     }
 
+    // Extra data/value used in the Priority queue as it's Value for entries.
     private static class Data {
         public String owner;
         public int quantity;
@@ -99,12 +102,59 @@ public class HW4
         this.data = data;
     }
 
+    // Called by EnterBuyOrder and EnterSellOrder to check if we have any good sales to perform.
+    private void checkExchange() {
+       // First check for both a valid buy and a valid sell order...
+       Entry<Key, Data> buyMin = buyOrders.min();
+       if(buyMin == null) return;
+       Entry<Key, Data> sellMin = sellOrders.min();
+       if(sellMin == null) return;
+
+       Data buyData = buyMin.getValue();
+       Data sellData = sellMin.getValue();
+
+       // Now we will check to see if the buy price is greater than or equal to the sell price. If not, return.
+       if(buyMin.getKey().price < sellMin.getKey().price) return;
+
+       // The transaction price is the average of the two prices. No reason to do an if-check for inequality as the
+       // average of 5000 and 5000 is 5000.
+       int transactionPrice = (buyMin.getKey().price + sellMin.getKey().price) / 2;
+
+       // The buyer and seller both have a posted quantity under the Data (value) of the orders. You can't but more
+       // than what's being sold and you also aren't going to buy more than you want. Let's determine how many
+       // will be transferred.
+       int transferQuantity = Math.min(buyData.quantity, sellData.quantity);
+
+       // Reduce the quantity of the buyer and seller by the transfer quantity. We can use setQuantity on the Data class.
+       buyData.setQuantity(buyData.quantity - transferQuantity);
+       sellData.setQuantity(sellData.quantity - transferQuantity);
+
+       // Let's report the sale.
+       System.out.println(String.format("ExecuteBuySellOrders %s %s", transactionPrice, transferQuantity));
+       System.out.println(String.format("Buyer: %s %s", buyData.owner, buyData.quantity));
+       System.out.println(String.format("Seller: %s %s", sellData.owner, sellData.quantity));
+
+       // check both buyMin and sellMin to see if there is remainning quantity. If there is no remaining quantity, then
+       // removeMin() from the priority queues.
+       if(buyData.quantity == 0) {
+          buyOrders.removeMin();
+       }
+       if(sellData.quantity == 0) {
+          sellOrders.removeMin();
+       }
+
+       // there might be more transactions to perform, so let's call checkExchange again.
+       checkExchange();
+
+    }
+
     private void EnterBuyOrder(String inTime, String inBuyer, String inPrice, String inQuantity) {
          Key key = new Key(inTime, Integer.parseInt(inPrice));
          Data data = new Data(inBuyer, Integer.parseInt(inQuantity));
          buyOrders.insert(key, data);
          String out = String.format("EnterBuyOrder: %s %s %s %s", inTime, inBuyer, inPrice, inQuantity);
          System.out.println(out);
+         checkExchange();
     }
 
     private void EnterSellOrder(String inTime, String inSeller, String inPrice, String inQuantity) {
@@ -113,6 +163,7 @@ public class HW4
          sellOrders.insert(key, data);
          String out = String.format("EnterSellOrder: %s %s %s %s", inTime, inSeller, inPrice, inQuantity);
          System.out.println(out);
+         checkExchange();
     }
 
     private void DisplayHighestBuyOrder(String inTime) {

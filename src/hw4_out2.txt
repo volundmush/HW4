@@ -27,8 +27,11 @@ EnterBuyOrder 140743 markus 7300 22
 ExecuteBuySellOrders 4800 10
 Buyer: markus 12
 Seller: lucas 0
-ExecuteBuySellOrders 6150 12
+ExecuteBuySellOrders 5250 12
 Buyer: markus 0
-Seller: bob 37
-DisplayLowestSellOrder 151009 bob 094500 5000 37
+Seller: horace 175
+DisplayLowestSellOrder 151009 horace 103234 3200 175
 EnterBuyOrder 164107 cartman 4905 21
+ExecuteBuySellOrders 4052 21
+Buyer: cartman 0
+Seller: horace 154
