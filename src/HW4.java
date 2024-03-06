@@ -204,11 +204,6 @@ public class HW4
         while (data.hasNextLine()) {
             handleDataLine();
         }
-
-        Entry<Key, Data> buyMin = buyOrders.min();
-        Entry<Key, Data> sellMin = sellOrders.min();
-
-        System.out.println("Finished");
     }
 
     public static void main(String[] args) {
